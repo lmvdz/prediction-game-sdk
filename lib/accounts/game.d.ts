@@ -9,6 +9,7 @@ import Vault from "./vault";
 import UserPredictionHistory from "./userPredictionHistory";
 import RoundHistory from "./roundHistory";
 import { Oracle } from "../types";
+import { Printable } from "src/printable";
 export declare type GameAccount = {
     owner: PublicKey;
     address: PublicKey;
@@ -31,13 +32,14 @@ export declare type GameAccount = {
     roundHistory: PublicKey;
     padding01: PublicKey[];
 };
-export default class Game implements DataUpdatable<GameAccount> {
+export default class Game implements DataUpdatable<GameAccount>, Printable {
     account: GameAccount;
     userPredictionHistory: UserPredictionHistory;
     roundHistory: RoundHistory;
     currentRound: Round;
     previousRound: Round;
     constructor(account: GameAccount);
+    print(): void;
     static fromJSON<GameAccount>(json: any): GameAccount;
     updateData(data: GameAccount): Promise<boolean>;
     loadRoundData(workspace: Workspace): Promise<Game>;

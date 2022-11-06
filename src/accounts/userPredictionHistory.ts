@@ -3,6 +3,7 @@ import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js'
 import { confirmTxRetry } from "../util"
 import { Workspace } from "../workspace"
 import { DataUpdatable } from "../dataUpdatable"
+import { Printable } from "src/printable"
 
 
 export type  UserPredictionHistoryItem = {
@@ -24,11 +25,14 @@ export type UserPredictionHistoryAccount = {
 
 }
 
-export default class UserPredictionHistory implements DataUpdatable<UserPredictionHistoryAccount> {
+export default class UserPredictionHistory implements DataUpdatable<UserPredictionHistoryAccount>, Printable  {
     account: UserPredictionHistoryAccount
 
     constructor(account: UserPredictionHistoryAccount){
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
     
     public async updateData(data: UserPredictionHistoryAccount): Promise<boolean> {

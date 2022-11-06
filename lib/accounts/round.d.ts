@@ -4,6 +4,7 @@ import { Workspace } from '../workspace';
 import Game from "./game";
 import { DataUpdatable } from "../dataUpdatable";
 import Crank from "./crank";
+import { Printable } from "src/printable";
 export declare type RoundAccount = {
     owner: PublicKey;
     game: PublicKey;
@@ -40,9 +41,10 @@ export declare type RoundAccount = {
     totalAmountPaidToCranks: anchor.BN;
     padding01: PublicKey[];
 };
-export default class Round implements DataUpdatable<RoundAccount> {
+export default class Round implements DataUpdatable<RoundAccount>, Printable {
     account: RoundAccount;
     constructor(account: RoundAccount);
+    print(): void;
     updateData(data: RoundAccount): Promise<boolean>;
     static fromJSON<RoundAccount>(json: any): RoundAccount;
     convertOraclePriceToNumber(price: anchor.BN, decimals_: anchor.BN, game: Game): number;

@@ -3,6 +3,7 @@ import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js'
 import { confirmTxRetry } from "../util"
 import { Workspace } from "../workspace"
 import { DataUpdatable } from "../dataUpdatable"
+import { Printable } from "src/printable"
 
 
 export type  RoundHistoryItem = {
@@ -43,11 +44,14 @@ export type RoundHistoryAccount = {
 
 }
 
-export default class RoundHistory implements DataUpdatable<RoundHistoryAccount> {
+export default class RoundHistory implements DataUpdatable<RoundHistoryAccount>, Printable {
     account: RoundHistoryAccount
 
     constructor(account: RoundHistoryAccount){
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
     
     public async updateData(data: RoundHistoryAccount): Promise<boolean> {

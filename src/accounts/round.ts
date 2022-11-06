@@ -7,6 +7,7 @@ import { DataUpdatable } from "../dataUpdatable"
 import { confirmTxRetry } from "../util/index"
 import Crank from "./crank"
 import { Oracle } from "../types"
+import { Printable } from "src/printable"
 
 
 export type RoundAccount = {
@@ -62,11 +63,14 @@ export type RoundAccount = {
 
 }
 
-export default class Round implements DataUpdatable<RoundAccount> {
+export default class Round implements DataUpdatable<RoundAccount>, Printable  {
     account: RoundAccount
 
     constructor(account: RoundAccount) {
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
 
     public async updateData(data: RoundAccount): Promise<boolean> {

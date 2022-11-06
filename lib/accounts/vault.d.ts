@@ -1,6 +1,7 @@
 import { PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { Workspace } from '../workspace';
 import { DataUpdatable } from "../dataUpdatable";
+import { Printable } from 'src/printable';
 export declare type VaultAccount = {
     address: PublicKey;
     owner: PublicKey;
@@ -14,9 +15,10 @@ export declare type VaultAccount = {
     vaultAtaAuthorityNonce: number;
     padding01: PublicKey[];
 };
-export default class Vault implements DataUpdatable<VaultAccount> {
+export default class Vault implements DataUpdatable<VaultAccount>, Printable {
     account: VaultAccount;
     constructor(account: VaultAccount);
+    print(): void;
     updateData(data: VaultAccount): Promise<boolean>;
     static fromJSON<VaultAccount>(json: any): VaultAccount;
     getUpdatedVaultData(workspace: Workspace): Promise<VaultAccount>;

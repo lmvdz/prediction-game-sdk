@@ -8,6 +8,7 @@ import Game from './game';
 import Vault from './vault';
 import UserClaimable from './userClaimable';
 import chunk from '../util/chunk';
+import { Printable } from 'src/printable';
 
 
 export type UserAccount = {
@@ -22,11 +23,14 @@ export type UserAccount = {
 }
 
 
-export default class User implements DataUpdatable<UserAccount> {
+export default class User implements DataUpdatable<UserAccount>, Printable {
     account: UserAccount
 
     constructor(account: UserAccount) {
         this.account = account;
+    }
+    print(): void {
+        throw new Error('Method not implemented.');
     }
 
     public async updateData(data: UserAccount): Promise<boolean> {

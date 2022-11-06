@@ -1,5 +1,5 @@
 export type PredictionGame = {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "prediction_game",
   "instructions": [
     {
@@ -1838,6 +1838,10 @@ export type PredictionGame = {
             "type": "u8"
           },
           {
+            "name": "roundInvalid",
+            "type": "bool"
+          },
+          {
             "name": "totalFeeCollected",
             "type": "u64"
           },
@@ -2480,12 +2484,17 @@ export type PredictionGame = {
       "code": 6101,
       "name": "RoundNumberMismatch",
       "msg": "Round Number Mismatch"
+    },
+    {
+      "code": 6102,
+      "name": "CrankRoundMismatch",
+      "msg": "Crank Round Mismatch"
     }
   ]
 };
 
 export const IDL: PredictionGame = {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "prediction_game",
   "instructions": [
     {
@@ -4324,6 +4333,10 @@ export const IDL: PredictionGame = {
             "type": "u8"
           },
           {
+            "name": "roundInvalid",
+            "type": "bool"
+          },
+          {
             "name": "totalFeeCollected",
             "type": "u64"
           },
@@ -4966,6 +4979,11 @@ export const IDL: PredictionGame = {
       "code": 6101,
       "name": "RoundNumberMismatch",
       "msg": "Round Number Mismatch"
+    },
+    {
+      "code": 6102,
+      "name": "CrankRoundMismatch",
+      "msg": "Crank Round Mismatch"
     }
   ]
 };

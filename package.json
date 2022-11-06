@@ -4,7 +4,8 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "ts-node build/index.ts"
+    "build": "ts-node build/index.ts",
+    "play": "ts-node sdk-playground.ts"
   },
   "devDependencies": {
     "@solana/web3.js": "^1.66.2",

@@ -11,6 +11,7 @@ import User from "./user"
 import { fetchAccountRetry, confirmTxRetry } from "../util/index"
 import Vault from "./vault"
 import UserClaimable from "./userClaimable"
+import { Printable } from "src/printable"
 
 
 export type UserPredictionAccount = {
@@ -32,11 +33,14 @@ export type UserPredictionAccount = {
 
 }
 
-export default class UserPrediction implements DataUpdatable<UserPredictionAccount> {
+export default class UserPrediction implements DataUpdatable<UserPredictionAccount>, Printable  {
     account: UserPredictionAccount
 
     constructor(account: UserPredictionAccount){
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
     
     public async updateData(data: UserPredictionAccount): Promise<boolean> {

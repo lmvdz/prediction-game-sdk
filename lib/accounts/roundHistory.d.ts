@@ -2,6 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import { PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { Workspace } from "../workspace";
 import { DataUpdatable } from "../dataUpdatable";
+import { Printable } from "src/printable";
 export declare type RoundHistoryItem = {
     recordId: anchor.BN;
     address: PublicKey;
@@ -18,6 +19,7 @@ export declare type RoundHistoryItem = {
     roundPriceDifference: anchor.BN;
     roundPriceDifferenceDecimals: anchor.BN;
     roundWinningDirection: number;
+    roundInvalid: boolean;
     totalFeeCollected: anchor.BN;
     totalUpAmount: anchor.BN;
     totalDownAmount: anchor.BN;
@@ -35,9 +37,10 @@ export declare type RoundHistoryAccount = {
     address: PublicKey;
     rounds: RoundHistoryItem[];
 };
-export default class RoundHistory implements DataUpdatable<RoundHistoryAccount> {
+export default class RoundHistory implements DataUpdatable<RoundHistoryAccount>, Printable {
     account: RoundHistoryAccount;
     constructor(account: RoundHistoryAccount);
+    print(): void;
     updateData(data: RoundHistoryAccount): Promise<boolean>;
     static fromJSON2<RoundHistoryAccountItem>(json: any): RoundHistoryAccountItem;
     static fromJSON<RoundHistoryAccount>(json: any): RoundHistoryAccount;

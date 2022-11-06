@@ -3,6 +3,7 @@ import { Workspace } from '../workspace'
 import { DataUpdatable } from "../dataUpdatable"
 import { fetchAccountRetry, confirmTxRetry } from "../util/index"
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { Printable } from 'src/printable';
 
 
 export type VaultAccount = {
@@ -26,11 +27,19 @@ export type VaultAccount = {
 }
 
 
-export default class Vault implements DataUpdatable<VaultAccount> {
+export default class Vault implements DataUpdatable<VaultAccount>, Printable  {
     account: VaultAccount
 
     constructor(account: VaultAccount) {
         this.account = account;
+    }
+    
+    print(): void {
+        Object.keys(this.account).forEach(key => {
+            if ((this.account[key] as any).toBase58 !== undefined) {
+                console.log(key, (this.account[key] as PublicKey).toBase58())
+            }
+        })
     }
 
     public async updateData(data: VaultAccount): Promise<boolean> {

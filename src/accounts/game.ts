@@ -13,6 +13,7 @@ import UserPrediction, { UserPredictionAccount } from "./userPrediction"
 import UserPredictionHistory, { UserPredictionHistoryAccount } from "./userPredictionHistory"
 import RoundHistory, { RoundHistoryAccount } from "./roundHistory"
 import { Oracle } from "../types"
+import { Printable } from "src/printable"
 
 export type GameAccount = {
 
@@ -48,7 +49,7 @@ export type GameAccount = {
     padding01: PublicKey[]
 }
 
-export default class Game implements DataUpdatable<GameAccount> {
+export default class Game implements DataUpdatable<GameAccount>, Printable {
 
     account: GameAccount
     userPredictionHistory: UserPredictionHistory
@@ -60,6 +61,9 @@ export default class Game implements DataUpdatable<GameAccount> {
         account: GameAccount,
     ) {
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
 
     public static fromJSON<GameAccount>(json: any): GameAccount {
@@ -248,6 +252,7 @@ export default class Game implements DataUpdatable<GameAccount> {
         if (!this.currentRound.account.feeCollected) throw Error("Round Fee Not Collected");
         if (!this.currentRound.account.settled) throw Error("Round Not Settled");
         if (!this.currentRound.account.cranksPaid) {
+            
             let unpaidCranks = (await workspace.program.account.crank.all()).filter(crank => {
                 return crank.account.lastCrankRound.toBase58() === this.currentRound.account.address.toBase58() &&
                 crank.account.lastPaidCrankRound.toBase58() !== this.currentRound.account.address.toBase58()

@@ -4,6 +4,7 @@ import { DataUpdatable } from "../dataUpdatable"
 import { fetchAccountRetry, confirmTxRetry } from "../util/index"
 import Game from './game';
 import User from './user';
+import { Printable } from 'src/printable';
 
 
 export type CrankAccount = {
@@ -23,11 +24,14 @@ export type CrankAccount = {
 }
 
 
-export default class Crank implements DataUpdatable<CrankAccount> {
+export default class Crank implements DataUpdatable<CrankAccount>, Printable {
     account: CrankAccount
 
     constructor(account: CrankAccount) {
         this.account = account;
+    }
+    print(): void {
+        throw new Error('Method not implemented.');
     }
 
     public async updateData(data: CrankAccount): Promise<boolean> {

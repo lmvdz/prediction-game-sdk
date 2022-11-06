@@ -1,5 +1,5 @@
 export declare type PredictionGame = {
-    "version": "1.0.8";
+    "version": "1.0.9";
     "name": "prediction_game";
     "instructions": [
         {
@@ -1838,6 +1838,10 @@ export declare type PredictionGame = {
                         "type": "u8";
                     },
                     {
+                        "name": "roundInvalid";
+                        "type": "bool";
+                    },
+                    {
                         "name": "totalFeeCollected";
                         "type": "u64";
                     },
@@ -2480,6 +2484,11 @@ export declare type PredictionGame = {
             "code": 6101;
             "name": "RoundNumberMismatch";
             "msg": "Round Number Mismatch";
+        },
+        {
+            "code": 6102;
+            "name": "CrankRoundMismatch";
+            "msg": "Crank Round Mismatch";
         }
     ];
 };

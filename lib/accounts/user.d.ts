@@ -5,15 +5,17 @@ import { DataUpdatable } from "../dataUpdatable";
 import * as anchor from '@project-serum/anchor';
 import Vault from './vault';
 import UserClaimable from './userClaimable';
+import { Printable } from 'src/printable';
 export declare type UserAccount = {
     address: PublicKey;
     owner: PublicKey;
     userClaimable: PublicKey;
     padding01: PublicKey[];
 };
-export default class User implements DataUpdatable<UserAccount> {
+export default class User implements DataUpdatable<UserAccount>, Printable {
     account: UserAccount;
     constructor(account: UserAccount);
+    print(): void;
     updateData(data: UserAccount): Promise<boolean>;
     static initializeUserInstruction(workspace: Workspace, userPubkey: PublicKey, userClaimablePubkey: PublicKey): Promise<TransactionInstruction>;
     static initializeUser(workspace: Workspace): Promise<User>;

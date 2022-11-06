@@ -8,6 +8,7 @@ import Game from './game';
 import { UpOrDown } from "../types";
 import User from "./user";
 import Vault from "./vault";
+import { Printable } from "src/printable";
 export declare type UserPredictionAccount = {
     owner: PublicKey;
     address: PublicKey;
@@ -20,9 +21,10 @@ export declare type UserPredictionAccount = {
     settled: boolean;
     padding01: PublicKey[];
 };
-export default class UserPrediction implements DataUpdatable<UserPredictionAccount> {
+export default class UserPrediction implements DataUpdatable<UserPredictionAccount>, Printable {
     account: UserPredictionAccount;
     constructor(account: UserPredictionAccount);
+    print(): void;
     updateData(data: UserPredictionAccount): Promise<boolean>;
     static initializeUserPredictionInstruction(workspace: Workspace, vault: Vault, game: Game, round: Round | PublicKey, user: User | PublicKey, userClaimable: PublicKey, fromTokenAccount: Account | PublicKey, fromTokenAccountAuthority: PublicKey, userPredictionPubkey: PublicKey, upOrDown: UpOrDown, amount: anchor.BN): Promise<TransactionInstruction>;
     static initializeUserPrediction(workspace: Workspace, vault: Vault, game: Game, round: Round, user: User | PublicKey, userClaimable: PublicKey, userTokenAccount: PublicKey, userTokenAccountAuthority: PublicKey, upOrDown: UpOrDown, amount: anchor.BN): Promise<UserPrediction>;

@@ -3,6 +3,7 @@ import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js'
 import { confirmTxRetry } from "../util"
 import { Workspace } from "../workspace"
 import { DataUpdatable } from "../dataUpdatable"
+import { Printable } from "src/printable"
 
 
 export type Claim = {
@@ -19,11 +20,14 @@ export type UserClaimableAccount = {
 
 }
 
-export default class UserClaimable implements DataUpdatable<UserClaimableAccount> {
+export default class UserClaimable implements DataUpdatable<UserClaimableAccount>, Printable  {
     account: UserClaimableAccount
 
     constructor(account: UserClaimableAccount){
         this.account = account;
+    }
+    print(): void {
+        throw new Error("Method not implemented.")
     }
     
     public async updateData(data: UserClaimableAccount): Promise<boolean> {

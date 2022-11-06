@@ -3,6 +3,7 @@ import { Workspace } from '../workspace';
 import { DataUpdatable } from "../dataUpdatable";
 import Game from './game';
 import User from './user';
+import { Printable } from 'src/printable';
 export declare type CrankAccount = {
     address: PublicKey;
     owner: PublicKey;
@@ -14,9 +15,10 @@ export declare type CrankAccount = {
     lastPaidCrankRound: PublicKey;
     padding01: PublicKey[];
 };
-export default class Crank implements DataUpdatable<CrankAccount> {
+export default class Crank implements DataUpdatable<CrankAccount>, Printable {
     account: CrankAccount;
     constructor(account: CrankAccount);
+    print(): void;
     updateData(data: CrankAccount): Promise<boolean>;
     static initializeCrankInstruction(workspace: Workspace, gamePubkey: PublicKey, userPubkey: PublicKey, crankPubkey: PublicKey): Promise<TransactionInstruction>;
     static initializeCrank(workspace: Workspace, game: Game, user: User): Promise<Crank>;
