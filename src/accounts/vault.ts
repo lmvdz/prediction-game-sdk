@@ -102,7 +102,7 @@ export default class Vault implements DataUpdatable<VaultAccount>, Printable  {
         let [vaultPubkey, _vaultPubkeyBump] = await workspace.programAddresses.getVaultPubkey(tokenMint);
 
         let ix = await this.initializeVaultInstruction(workspace, tokenMint, vaultPubkey);
-        ix.keys.forEach(key => console.log(key.pubkey.toBase58()))
+        // ix.keys.forEach(key => console.log(key.pubkey.toBase58()))
         let tx = new Transaction().add(ix);
         
 

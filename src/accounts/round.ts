@@ -224,6 +224,45 @@ export default class Round implements DataUpdatable<RoundAccount>, Printable  {
         })
     }
 
+    public static initializeStuckFirst(workspace: Workspace, game: Game, crank: Crank): Promise<Game> {
+    
+        return new Promise((resolve, reject) => {
+            workspace.programAddresses.getRoundPubkey(game.account.address, new anchor.BN(1)).then(([roundPubkey, _roundPubkeyBump]) => {
+                workspace.program.methods.initFirstRoundInstruction().accounts({
+                    signer: workspace.owner,
+                    game: game.account.address,
+                    crank: crank.account.address,
+                    round: roundPubkey,
+                    priceProgram: game.account.priceProgram,
+                    priceFeed: game.account.priceFeed,
+                    systemProgram: anchor.web3.SystemProgram.programId
+                }).transaction().then(tx => {
+                    workspace.sendTransaction(tx).then(txSignature => {
+                        confirmTxRetry(workspace, txSignature).then(() => {
+                            game.updateGameData(workspace).then((game: Game) => {
+                                game.loadRoundData(workspace).then((game: Game) => {
+                                    resolve(game);
+                                }).catch(error => {
+                                    reject(error);
+                                })
+                            }).catch(error => {
+                                reject(error);
+                            })
+                        }).catch(error => {
+                            reject(error);
+                        })
+                    }).catch(error => {
+                        reject(error);
+                    })
+                }).catch(error => {
+                    reject(error);
+                })
+            }).catch(error => {
+                reject(error);
+            })
+        })
+    }
+
     public static initializeSecond(workspace: Workspace, game: Game, crank: Crank): Promise<Game> {
         
         return new Promise((resolve, reject) => {
@@ -231,6 +270,50 @@ export default class Round implements DataUpdatable<RoundAccount>, Printable  {
             workspace.programAddresses.getRoundPubkey(game.account.address, new anchor.BN(2)).then(([roundPubkey, _secondRoundPubkeyBump]) => {
                 let roundNumberAsBuffer = workspace.programAddresses.roundToBuffer(new anchor.BN(2));
                 workspace.program.methods.initSecondRoundInstruction([roundNumberAsBuffer[0], roundNumberAsBuffer[1], roundNumberAsBuffer[2], roundNumberAsBuffer[3]]).accounts({
+                    signer: workspace.owner,
+                    game: game.account.address,
+                    crank: crank.account.address,
+                    secondRound: roundPubkey,
+                    roundHistory: game.account.roundHistory,
+                    firstRound: game.currentRound.account.address,
+                    priceProgram: game.account.priceProgram,
+                    priceFeed: game.account.priceFeed,
+                    systemProgram: anchor.web3.SystemProgram.programId
+                }).transaction().then(tx => {
+                    workspace.sendTransaction(tx).then(txSignature => {
+                        confirmTxRetry(workspace, txSignature).then(() => {
+                            game.updateGameData(workspace).then((game: Game) => {
+                                game.updateRoundData(workspace).then((game: Game) => {
+                                    resolve(game);
+                                }).catch(error => {
+                                    reject(error);
+                                })
+                            }).catch(error => {
+                                reject(error);
+                            })
+                        }).catch(error => {
+                            reject(error);
+                        })
+                    }).catch(error => {
+                        reject(error);
+                    })
+                }).catch(error => {
+                    reject(error);
+                })
+            }).catch(error => {
+                reject(error);
+            })
+        })
+       
+    }
+
+    public static initializeStuckSecond(workspace: Workspace, game: Game, crank: Crank): Promise<Game> {
+        
+        return new Promise((resolve, reject) => {
+            
+            workspace.programAddresses.getRoundPubkey(game.account.address, new anchor.BN(2)).then(([roundPubkey, _secondRoundPubkeyBump]) => {
+                let roundNumberAsBuffer = workspace.programAddresses.roundToBuffer(new anchor.BN(2));
+                workspace.program.methods.initStuckSecondRoundInstruction([roundNumberAsBuffer[0], roundNumberAsBuffer[1], roundNumberAsBuffer[2], roundNumberAsBuffer[3]]).accounts({
                     signer: workspace.owner,
                     game: game.account.address,
                     crank: crank.account.address,
@@ -279,6 +362,54 @@ export default class Round implements DataUpdatable<RoundAccount>, Printable  {
             let roundNumberAsBuffer = workspace.programAddresses.roundToBuffer(nextRoundNumber);
             workspace.programAddresses.getRoundPubkey(game.account.address, nextRoundNumber).then(([roundPubkey, _roundPubkeyBump]) => {
                 workspace.program.methods.initNextRoundAndClosePreviousInstruction([roundNumberAsBuffer[0], roundNumberAsBuffer[1], roundNumberAsBuffer[2], roundNumberAsBuffer[3]]).accounts({
+                    signer: workspace.owner,
+                    game: game.account.address,
+                    crank: crank.account.address,
+                    receiver: workspace.owner,
+                    nextRound: roundPubkey,
+                    roundHistory: game.account.roundHistory,
+                    currentRound: game.currentRound.account.address,
+                    previousRound: game.previousRound.account.address,
+                    priceProgram: game.account.priceProgram,
+                    priceFeed: game.account.priceFeed,
+                    systemProgram: anchor.web3.SystemProgram.programId
+                }).transaction().then(tx => {
+                    workspace.sendTransaction(tx).then(txSignature => {
+                        confirmTxRetry(workspace, txSignature).then(() => {
+                            game.updateGameData(workspace).then((game: Game) => {
+                                game.updateRoundData(workspace).then((game: Game) => {
+                                    resolve(game);
+                                }).catch(error => {
+                                    reject(error);
+                                })
+                            }).catch(error => {
+                                reject(error);
+                            })
+                        }).catch(error => {
+                            reject(error);
+                        })
+                    }).catch(error => {
+                        reject(error);
+                    })
+                }).catch(error => {
+                    reject(error);
+                })
+            }).catch(error => {
+                reject(error);
+            })
+        })
+    }
+
+    public static initializeStuckNext(workspace: Workspace, game: Game, crank: Crank): Promise<Game> {
+        
+        return new Promise((resolve, reject) => {
+            let nextRoundNumber = new anchor.BN(game.currentRound.account.roundNumber + 1);
+            if (nextRoundNumber.gt(U32MAX)) {
+                nextRoundNumber = new anchor.BN(1);
+            }
+            let roundNumberAsBuffer = workspace.programAddresses.roundToBuffer(nextRoundNumber);
+            workspace.programAddresses.getRoundPubkey(game.account.address, nextRoundNumber).then(([roundPubkey, _roundPubkeyBump]) => {
+                workspace.program.methods.initStuckNextRoundAndClosePreviousInstruction([roundNumberAsBuffer[0], roundNumberAsBuffer[1], roundNumberAsBuffer[2], roundNumberAsBuffer[3]]).accounts({
                     signer: workspace.owner,
                     game: game.account.address,
                     crank: crank.account.address,

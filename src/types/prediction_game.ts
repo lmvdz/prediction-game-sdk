@@ -582,6 +582,52 @@ export type PredictionGame = {
       "args": []
     },
     {
+      "name": "initStuckFirstRoundInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "round",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initSecondRoundInstruction",
       "accounts": [
         {
@@ -643,7 +689,139 @@ export type PredictionGame = {
       ]
     },
     {
+      "name": "initStuckSecondRoundInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "secondRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "firstRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "nextRoundNumber",
+          "type": {
+            "array": [
+              "u8",
+              4
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "initNextRoundAndClosePreviousInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nextRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currentRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "previousRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "nextRoundNumber",
+          "type": {
+            "array": [
+              "u8",
+              4
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "initStuckNextRoundAndClosePreviousInstruction",
       "accounts": [
         {
           "name": "signer",
@@ -3077,6 +3255,52 @@ export const IDL: PredictionGame = {
       "args": []
     },
     {
+      "name": "initStuckFirstRoundInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "round",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initSecondRoundInstruction",
       "accounts": [
         {
@@ -3138,7 +3362,139 @@ export const IDL: PredictionGame = {
       ]
     },
     {
+      "name": "initStuckSecondRoundInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "secondRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "firstRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "nextRoundNumber",
+          "type": {
+            "array": [
+              "u8",
+              4
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "initNextRoundAndClosePreviousInstruction",
+      "accounts": [
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "game",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "roundHistory",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "crank",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiver",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nextRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "currentRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "previousRound",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "priceFeed",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "nextRoundNumber",
+          "type": {
+            "array": [
+              "u8",
+              4
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "initStuckNextRoundAndClosePreviousInstruction",
       "accounts": [
         {
           "name": "signer",
